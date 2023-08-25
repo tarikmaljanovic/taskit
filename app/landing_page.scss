@@ -1,0 +1,23 @@
+@import './global.scss';
+
+body {
+  width: 100vw;
+  height: 100dvh;
+  margin: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .container {
+    padding: 2%;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 8px;
+    .inner {
+      display: flex;
+      flex-direction: column;
+      .input {
+        margin: 20px 0px;
+      }
+    }
+  }
+}

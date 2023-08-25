@@ -1,13 +1,13 @@
 'use server'
-import Home1 from "./comp"
-import { Login, Register } from "./api/routes"
+import LoginUI from "./landing_page"
+import { Login, Register } from "./api/login_signup"
 
 export default async function LoginPage() {
 
   return (
     <>
-      <Home1
-        user={await Login()}
+      <LoginUI
+        login={Login}
         register={Register}
       />
     </>
