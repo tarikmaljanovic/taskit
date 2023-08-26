@@ -9,15 +9,61 @@ body {
   align-items: center;
   justify-content: center;
   .container {
+    @media only screen and (max-width: 767px) {
+      padding: 8%
+    }
+    @media only screen and (min-width: 768px) and (max-width: 959px) {
+      padding: 3%;
+    }
+    position: relative;
     padding: 2%;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .error-msg {
+      margin-top: 15px;
+      align-self: center;
+    }
     .inner {
       display: flex;
       flex-direction: column;
+      animation: translateX 300ms ease-in-out forwards;
       .input {
         margin: 20px 0px;
       }
+      .buttons {
+        display:  flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        .primary-button {
+          background-color: #5371DB;
+        }
+        .secondary-button {
+          color: #5371DB;
+        }
+      }
     }
+    .is-hidden {
+      display: none;
+    }
+  }
+}
+
+@keyframes translateX {
+  0% {
+    opacity: 0;
+    transform: translateX(60px);
+  }
+  
+  80% {
+    transform: translateX(-5px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0px);
   }
 }
