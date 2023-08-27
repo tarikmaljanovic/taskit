@@ -1,7 +1,9 @@
+import WorkspacesUI from "./workspaces"
+
 export default async function WorkspacesPage() {
   return (
     <>
-      hello
+      <WorkspacesUI />
     </>
   )
 }

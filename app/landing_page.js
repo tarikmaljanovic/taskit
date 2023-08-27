@@ -131,7 +131,7 @@ export default function LoginUI(props) {
                   if(res == false) {
                     setShowSignupError(true)
                   } else {
-                    localStorage.setItem('user', res)
+                    localStorage.setItem('user', JSON.stringify(res))
                     router.push('/workspaces');
                   }
                 })
