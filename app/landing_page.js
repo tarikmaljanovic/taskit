@@ -20,7 +20,7 @@ export default function LoginUI(props) {
   return (
     <>
       <div className='container'>
-        <Image src={Logo.src} width={200} height={100} alt='Taskit Logo'></Image>
+        <Image src={Logo.src} width={200} height={50} alt='Taskit Logo'></Image>
         <div ref={loginRef} className={`inner ${showSignup ? 'is-hidden' : ''}`}>
           <FormControl className='input' sx={{ m: 1, width: '25ch' }} variant="outlined">
             <InputLabel htmlFor="outlined-adornment-email">Email</InputLabel>
@@ -62,7 +62,7 @@ export default function LoginUI(props) {
                   setShowError(true)
                 } else {
                   localStorage.setItem('user', JSON.stringify(res))
-                  router.push('/workspaces')
+                  router.push('/workspaces', {scroll: false})
                 }
               })
             }}>Login</Button>
@@ -132,7 +132,7 @@ export default function LoginUI(props) {
                     setShowSignupError(true)
                   } else {
                     localStorage.setItem('user', JSON.stringify(res))
-                    router.push('/workspaces');
+                    router.push('/workspaces', {scroll: false});
                   }
                 })
               } else {
