@@ -66,7 +66,9 @@
     }
     .dropdown {
       position: absolute;
+      z-index: 10;
       box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      background-color: white;
       border-radius: 5px;
       top: 30px;
       width: 100%;

@@ -26,9 +26,11 @@ export default function Navbar(props) {
               <AccountCircleIcon onClick={() => setDropdown(!dropdown)} className='user-icon'/>
               <MenuIcon className='hamburger-menu'/>
               {dropdown ? (<div className={`dropdown ${dropdown ? '' : 'hidden'}`}>
-                <p className='dropdown-item'>My Profile</p>
                 <p onClick={() => {
-                  router.back()
+                  router.push('/profile')
+                }} className='dropdown-item'>My Profile</p>
+                <p onClick={() => {
+                  router.push('/')
                   localStorage.removeItem('user')
                 }} className='dropdown-item'>Log out</p>
               </div>) : null}

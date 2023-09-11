@@ -10,7 +10,8 @@ export async function Signup(register_user) {
       INSERT INTO users (first_name, last_name, email, pass)
       VALUES ('${register_user.first_name}', '${register_user.last_name}', '${register_user.email}', '${md5(register_user.pass)}')`
     );
-    return (await connection).execute(`SELECT * FROM users WHERE email = '${register_user.email}'`)[0][0];
+    const user = (await connection).execute(`SELECT * FROM users WHERE email = '${register_user.email}'`);
+    return (await user)[0][0]
   } else {
     return false;
   }
