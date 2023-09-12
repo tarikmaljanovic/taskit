@@ -13,10 +13,15 @@ export default function WorkspacesUI(props) {
   const [select, setSelect] = useState('')
   const [alert, setAlert] = useState(false)
   const [joinDialog, setJoinDialog] = useState(false)
+  const [deleteDialog, setDeleteDialog] = useState(false)
   const [dropdown, setDropdown] = useState(0)
+  const [currentWorkspace, setCurrentWorkspace] = useState(0)
+  const [leaveDialog, setLeaveDialog] = useState(false)
+  const [joinAlert, setJoinAlert] = useState(false)
+  const [failedJoinAlert, setFailedJoinAlert] = useState(false)
   const nameField = useRef()
   const limitField = useRef()
-  const idk = useRef()
+  const idField = useRef()
 
   const new_workspace = {
     name: '',
@@ -45,7 +50,7 @@ export default function WorkspacesUI(props) {
         {
           workspaces.map(item => {
             return (
-              <div onClick={() => console.log('hello')} className={`workspace is-${item.color}`} key={item.id}>
+              <div className={`workspace is-${item.color}`} key={item.id}>
                 <p className='name'>{item.name}</p>
                 <p className='member-limit'><span className='tag'>Member Limit: </span>{item.member_limit}</p>
                   <MoreVertIcon onClick={(event) => {setDropdown(item.id); event.stopPropagation()}} />
@@ -53,10 +58,18 @@ export default function WorkspacesUI(props) {
                       dropdown == item.id ? (
                         <ClickAwayListener onClickAway={() => setDropdown(0)}>
                           <div className='dropdown'>
-                            <p>Leave Workspace</p>
+                            <p onClick={(event) => {
+                              setCurrentWorkspace(item.id)
+                              setLeaveDialog(true)
+                              event.stopPropagation()
+                            }}>Leave Workspace</p>
                             {
                               item.admin_email == user.email ? (
-                                <p className='delete'>Delete Workspace</p>
+                                <p className='delete' onClick={(event) => {
+                                  setDeleteDialog(true)
+                                   setCurrentWorkspace(item.id)
+                                    event.stopPropagation()
+                                  }}>Delete Workspace</p>
                               ) : null
                             }
                           </div>
@@ -130,6 +143,7 @@ export default function WorkspacesUI(props) {
             Join a workspace by entering its ID number...
           </DialogContentText>
           <TextField
+            ref={idField}
             margin="dense"
             id="id"
             label="Workspace ID"
@@ -140,13 +154,70 @@ export default function WorkspacesUI(props) {
             variant="standard"
           />
           <DialogActions>
-            <Button>Join Workspace</Button>
+            <Button onClick={() => props.joinWorkspace(user.id, idField.current.children[1].children[0].value).then(res => {
+              if(res != false) {
+                props.getWorkspaces(user.id).then(res => {
+                  updateWorkspaces(res)
+                })
+                setJoinAlert(true)
+              } else {
+                setFailedJoinAlert(true)
+              }
+            })}>Join Workspace</Button>
+          </DialogActions>
+        </DialogContent>
+      </Dialog>
+      <Dialog className='delete-workspace' open={deleteDialog} onClose={() => setDeleteDialog(false)}>
+        <DialogTitle className='dialog-title'>Delete Workspace</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you shure you want to delete this workspace?
+          </DialogContentText>
+          <DialogActions>
+            <Button onClick={() => {
+              props.deleteWorkspace(currentWorkspace)
+              props.getWorkspaces(user.id).then(res => {
+                updateWorkspaces(res)
+              })
+              setDeleteDialog(false)
+              setCurrentWorkspace(0)
+            }} variant='outlined' color='error'>Delete</Button>
+            <Button onClick={() => setDeleteDialog(false)}>Cancel</Button>
+          </DialogActions>
+        </DialogContent>
+      </Dialog>
+      <Dialog className='leave-workspace' open={leaveDialog} onClose={() => setLeaveDialog(false)}>
+        <DialogTitle className='dialog-title'>Leave Workspace</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to leave this Workspace? Your admin privilages remain if you rejoin.
+          </DialogContentText>
+          <DialogActions>
+            <Button onClick={() => {
+              props.leaveWorkspace(user.id, currentWorkspace)
+              props.getWorkspaces(user.id).then(res => {
+                updateWorkspaces(res)
+              })
+              setLeaveDialog(false)
+              setCurrentWorkspace(0)
+            }} variant='outlined' color='error'>Leave</Button>
+            <Button onClick={() => setLeaveDialog(false)}>Cancel</Button>
           </DialogActions>
         </DialogContent>
       </Dialog>
       <Snackbar open={alert} onClose={() => setAlert(false)} autoHideDuration={6000} anchorOrigin={{ vertical: 'top', horizontal: 'right' }} >
         <Alert severity="success" sx={{ width: '100%' }}>
           You have successfully created a Workspace!
+        </Alert>
+      </Snackbar>
+      <Snackbar open={joinAlert} onClose={() => setJoinAlert(false)} autoHideDuration={6000} anchorOrigin={{ vertical: 'top', horizontal: 'right' }} >
+        <Alert severity="success" sx={{ width: '100%' }}>
+          You have successfully join a Workspace!
+        </Alert>
+      </Snackbar>
+      <Snackbar open={failedJoinAlert} onClose={() => setFailedJoinAlert(false)} autoHideDuration={6000} anchorOrigin={{ vertical: 'top', horizontal: 'right' }} >
+        <Alert severity="error" sx={{ width: '100%' }}>
+          Failed to join the Workspace!
         </Alert>
       </Snackbar>
 

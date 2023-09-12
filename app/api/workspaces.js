@@ -16,14 +16,21 @@ export async function CreateWorkspace(new_workspace, user_id) {
   return (await connection).execute(`INSERT INTO user_workspaces (user_id, workspace_id) VALUES (${user_id}, ${(await entry)[0].insertId})`)
 }
 
-export async function DeleteWorkspace() {
-
+export async function DeleteWorkspace(workspace_id) {
+  (await connection).execute(`DELETE FROM user_workspaces WHERE workspace_id = ${workspace_id}`)
+  return (await connection).execute(`DELETE FROM workspaces WHERE id = ${workspace_id}`)
 }
 
-export async function LeaveWorkspace() {
-  
+export async function LeaveWorkspace(user_id, workspace_id) {
+  return (await connection).execute(`DELETE FROM user_workspaces WHERE user_id = ${user_id} AND workspace_id = ${workspace_id}`)
 }
 
-export async function JoinWorkspace() {
-  
+export async function JoinWorkspace(user_id, workspace_id) {
+  const entry = (await connection).execute(`SELECT id FROM workspaces WHERE id = ${workspace_id}`)
+  const entry2 = (await connection).execute(`SELECT id FROM user_workspaces WHERE user_id = ${user_id} AND workspace_id = ${workspace_id}`)
+  if((await entry)[0][0] != undefined && (await entry2)[0][0] == undefined) {
+    return (await connection).execute(`INSERT INTO user_workspaces (user_id, workspace_id) VALUES (${user_id}, ${workspace_id})`)
+  } else {
+    return false
+  }
 }
