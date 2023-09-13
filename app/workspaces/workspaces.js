@@ -5,6 +5,7 @@ import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, TextFiel
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { ClickAwayListener } from '@mui/base';
 import { useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation'
 
 export default function WorkspacesUI(props) {
   const user = JSON.parse(localStorage.getItem('user'))
@@ -22,6 +23,7 @@ export default function WorkspacesUI(props) {
   const nameField = useRef()
   const limitField = useRef()
   const idField = useRef()
+  const router = useRouter()
 
   const new_workspace = {
     name: '',
@@ -36,8 +38,10 @@ export default function WorkspacesUI(props) {
     })
   }, [])
 
+
   return (
     <>
+      <div className='workspaces-parent'>
       <Navbar />
       <div className='title-bar'>
         <p className='title'>Workspaces</p>
@@ -50,7 +54,7 @@ export default function WorkspacesUI(props) {
         {
           workspaces.map(item => {
             return (
-              <div className={`workspace is-${item.color}`} key={item.id}>
+              <div onClick={() => router.push(`workspace/${item.id}`)} className={`workspace is-${item.color}`} key={item.id}>
                 <p className='name'>{item.name}</p>
                 <p className='member-limit'><span className='tag'>Member Limit: </span>{item.member_limit}</p>
                   <MoreVertIcon onClick={(event) => {setDropdown(item.id); event.stopPropagation()}} />
@@ -220,7 +224,7 @@ export default function WorkspacesUI(props) {
           Failed to join the Workspace!
         </Alert>
       </Snackbar>
-
+      </div>
     </>
   )
 }

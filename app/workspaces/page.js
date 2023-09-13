@@ -4,7 +4,6 @@ import { GetWorkspaces, CreateWorkspace, DeleteWorkspace, LeaveWorkspace, JoinWo
 
 export default async function WorkspacesPage() {
   return (
-    <>
       <WorkspacesUI
         getWorkspaces={GetWorkspaces}
         createWorkspace={CreateWorkspace}
@@ -12,6 +11,5 @@ export default async function WorkspacesPage() {
         leaveWorkspace={LeaveWorkspace}
         joinWorkspace={JoinWorkspace}
       />
-    </>
   )
 }

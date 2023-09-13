@@ -17,7 +17,7 @@ export default function Navbar(props) {
 
   return (
     <>
-      <div className='container'>
+      <div className='nav-container'>
         <Image className='desktop-logo' src={Logo.src} width={180} height={40} alt='Taskit Logo'></Image>
           <Image className='mobile-logo' src={Logo2.src} width={40} height={80} alt='Taskit Logo'></Image>
           <ClickAwayListener onClickAway={() => setDropdown(false)}>

@@ -19,6 +19,7 @@ export default function LoginUI(props) {
 
   return (
     <>
+    <div className='parent'>
       <div className='container'>
         <Image src={Logo.src} width={200} height={50} alt='Taskit Logo'></Image>
         <div ref={loginRef} className={`inner ${showSignup ? 'is-hidden' : ''}`}>
@@ -62,7 +63,7 @@ export default function LoginUI(props) {
                   setShowError(true)
                 } else {
                   localStorage.setItem('user', JSON.stringify(res))
-                  router.push('/workspaces', {scroll: false})
+                  router.push('/workspaces')
                 }
               })
             }}>Login</Button>
@@ -144,6 +145,7 @@ export default function LoginUI(props) {
           {showError ? <FormHelperText className='error-msg' error children='Please fill out all the Fields'/> : ''}
           {showSignupError ? <FormHelperText className='error-msg' error children='This Email is already in use'/> : ''}
         </div>
+      </div>
       </div>
     </>
   )
