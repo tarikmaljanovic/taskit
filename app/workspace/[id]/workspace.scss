@@ -1,1 +1,73 @@
 @import '../../global.scss';
+
+.workspace-container {
+  display: flex;
+  flex-direction: column;
+  @media only screen and (max-width: 767px) {
+    padding: 2%
+  }
+  @media only screen and (min-width: 768px) and (max-width: 959px) {
+    padding: 2%;
+  }
+  padding: 1%;
+  .tool-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: space;
+    .workspace-name {
+      font-size: 40px;
+      margin: 0;
+      font-family: 'Sicret';
+    }
+    svg {
+      align-self: center;
+      display: flex;
+      width: 30px;
+      height: 30px;
+      color: #6F8EFF;
+      cursor: pointer;
+    }
+  }
+  .projects-container {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 300px);
+    justify-content: center;
+    row-gap: 20px;
+    column-gap: 20px;
+    .project-card {
+      display: flex;
+      cursor: pointer;
+      flex-direction: column;
+      padding: 10px;
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      border-radius: 5px;
+      width: 300px;
+      .upper {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        .project-name {
+          font-size: 20px;
+          margin: 5px 6px;
+        }
+        svg {
+          cursor: pointer;
+        }
+      }
+      .task-count {
+        padding-left: 20px;
+        .unfinished {
+          color: #FF6F6F;
+        }
+        .in-progress {
+          color: #6F8EFF;
+        }
+        .finished {
+          color: #47E097;
+        }
+      }
+    }
+  }
+}

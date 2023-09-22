@@ -108,46 +108,49 @@
       border-left: solid 10px #D38CFF;
     }
   }
-  .create-workspace {
-    .create-dialog {
-      .color-picker {
-        display: flex;
-        justify-content: space-evenly;
-        align-items: center;
-        flex-direction: row;
-        margin: 20px 0px;
-        .color-option {
-          width: 50px;
-          height: 50px;
-          border-radius: 50%;
-          transition: 300ms ease;
-        }
-        .color-option:first-child {
-          background-color: #D38CFF;
-        }
-        .color-option:nth-child(2) {
-          background-color: #6F8EFF;
-        }
-        .color-option:nth-child(3) {
-          background-color: #FF6F6F;
-        }
-        .color-option:last-child {
-          background-color: #47E097;
-        }
-        .color-option:hover {
-          box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 10px;
-          transition: 100ms ease;
-        }
-        .not-selected {
-          opacity: 0.4;
-        }
+}
+.create-workspace {
+  .create-dialog {
+    .color-picker {
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      flex-direction: row;
+      margin: 20px 0px;
+      .color-option {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        transition: 300ms ease;
+      }
+      .color-option:nth-child(1) {
+        background-color: #D38CFF;
+      }
+      .color-option:nth-child(2) {
+        background-color: #6F8EFF;
+      }
+      .color-option:nth-child(3) {
+        background-color: #FF6F6F;
+      }
+      .color-option:last-child {
+        background-color: #47E097;
+      }
+      .color-option:hover {
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 10px;
+        transition: 100ms ease;
+      }
+      .not-selected {
+        opacity: 0.4;
       }
     }
   }
+}
+
+div {
   .dialog-title {
     font-family: 'Sicret';
     font-size: 35px;
-  }
+  }  
 }
 
 @keyframes growDown {
