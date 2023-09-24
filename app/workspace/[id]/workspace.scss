@@ -32,7 +32,7 @@
     margin-top: 20px;
     display: grid;
     grid-template-columns: repeat(auto-fit, 300px);
-    justify-content: center;
+    justify-content: start;
     row-gap: 20px;
     column-gap: 20px;
     .project-card {
@@ -69,5 +69,27 @@
         }
       }
     }
+    .add-card {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      svg {
+        color: #6F8EFF;
+        width: 50px;
+        height: 50px;
+        transition: 200ms ease;
+      }
+      svg:hover {
+        opacity: 0.5;
+        transition: 200ms ease;
+      }
+    }
+  }
+}
+
+div {
+  .dialog-title {
+    font-size: 30px;
+    font-family: 'Sicret';
   }
 }
