@@ -12,13 +12,18 @@ export default function WorkspaceUI(props) {
   const [projects, updateProjects] = useState([])
   const [dialogs, setDialogs] = useState({
     create_project: false,
-    workspace_settings: false
+    workspace_settings: false,
+    save_workspace_changes: false,
+    delete_workspace: true
   })
   const [snackBars, setSnackbars] = useState({
     noProjectName: false,
-    projectCreationSuccess: false
+    projectCreationSuccess: false,
+    workspaceChangeSuccess: false,
   })
   const project_name = useRef()
+  const workspace_name = useRef()
+  const admin_email = useRef()
   const router = useRouter()
   
 
@@ -106,10 +111,17 @@ export default function WorkspaceUI(props) {
           You have successfully created a new Project!
         </Alert>
       </Snackbar>
+      <Snackbar open={snackBars.workspaceChangeSuccess} onClose={() => setSnackbars({...snackBars, workspaceChangeSuccess: false})} autoHideDuration={6000} anchorOrigin={{ vertical: 'top', horizontal: 'right' }} >
+        <Alert severity="success" sx={{ width: '100%' }}>
+          Changes were made to this workspace successfully!
+        </Alert>
+      </Snackbar>
       <Dialog open={dialogs.workspace_settings} onClose={() => setDialogs({...dialogs, workspace_settings: false})}>
         <DialogTitle className='dialog-title'>Workspace Settings</DialogTitle>
         <DialogContent>
           <TextField
+              ref={workspace_name}
+              defaultValue={workspace.name}
               margin="dense"
               id="workspace_name"
               label="Workspace Name"
@@ -118,6 +130,8 @@ export default function WorkspaceUI(props) {
               variant="standard"
             />
             <TextField
+              ref={admin_email}
+              defaultValue={workspace.admin_email}
               margin="dense"
               id="admin_email"
               label="Admin Email"
@@ -128,8 +142,35 @@ export default function WorkspaceUI(props) {
         </DialogContent>
         <DialogActions>
           <Button variant='outlined' color='error'>Delete Workspace</Button>
-          <Button variant='outlined'>Save Changes</Button>
+          <Button variant='outlined' onClick={() => setDialogs({...dialogs, save_workspace_changes: true})}>Save Changes</Button>
           <Button onClick={() => setDialogs({...dialogs, workspace_settings: false})}>Cancel</Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog open={dialogs.save_workspace_changes} onClose={() => setDialogs({...dialogs, save_workspace_changes: false})}>
+        <DialogTitle className='dialog-title'>Save Changes</DialogTitle>
+        <DialogContent>
+          <DialogContentText>Are you sure you want to make changes to this workspace?</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button variant='outlined' onClick={() => {
+              props.updateWorkspace({name: workspace_name.current.children[1].children[0].value, admin_email: admin_email.current.children[1].children[0].value })
+              props.getWorkspace(props.id).then(res => {
+                updateWorkspace(res)
+              })
+              setSnackbars({...snackBars, workspaceChangeSuccess: true})
+              setDialogs({...dialogs, save_workspace_changes: false})
+            }}>Save</Button>
+          <Button variant='text' onClick={() => setDialogs({...dialogs, save_workspace_changes: false})}>Cancel</Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog open={dialogs.delete_workspace} onClose={() => setDialogs({...dialogs, delete_workspace: false})}>
+        <DialogTitle className='dialog-title'>Delete Workspace</DialogTitle>
+        <DialogContent>
+          <DialogContentText>Are you sure you want to delete this workspace?</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button variant='outlined' color='error'>Delete</Button>
+          <Button variant='text'>Cancel</Button>
         </DialogActions>
       </Dialog>
     </>

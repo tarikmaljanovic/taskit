@@ -41,5 +41,5 @@ export async function CreateProject(project) {
 }
 
 export async function UpdateWorkspace(workspace) {
-
+  return (await connection).execute(`UPDATE workspaces SET name = '${workspace.name}', admin_email = '${workspace.admin_email}'`)
 }
